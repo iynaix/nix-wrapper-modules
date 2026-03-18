@@ -126,7 +126,13 @@ in
     type = lib.types.str;
     readOnly = true;
     default = "${placeholder config.zdotFilesOutput}/${config.zdotFilesDirname}";
-    description = "The placeholder for the directory which is created as the ZDOTDIR in the wrapper output";
+    description = ''
+      The placeholder for the directory which is created as the ZDOTDIR in the wrapper output
+
+      To get the path from outside of the module, it is declared as ZDOTDIR via passthru as well
+
+      `wrapped-zsh-package.ZDOTDIR` will fetch the path from the output of the wrapper instead.
+    '';
   };
   options.zdotFilesDirname = lib.mkOption {
     type = lib.types.str;
