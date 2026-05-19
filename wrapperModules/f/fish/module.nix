@@ -100,7 +100,7 @@ let
       completionDirs = mkOption {
         type = types.listOf types.str;
         default = cfg.pluginCompletionDirs;
-        description = "The directories which will be checked for config files";
+        description = "The directories which will be checked for completion files";
       };
     };
   };
@@ -118,9 +118,9 @@ in
     )
   ];
   options = {
-    wrapperVariants = lib.mkOption {
-      type = lib.types.attrsOf (
-        lib.types.submoduleWith {
+    wrapperVariants = mkOption {
+      type = types.attrsOf (
+        types.submoduleWith {
           modules = [
             (
               { name, ... }:
@@ -149,7 +149,6 @@ in
         It is sourced by fish using `--init-command`.
       '';
     };
-
     abbreviations = mkOption {
       type = types.attrsOf (wlib.types.spec abbreviationModule);
       default = { };
@@ -444,7 +443,7 @@ in
         };
         customPluginCompletions = mapPluginsToString {
           plugins = completionPlugins.wrong;
-          dirList = plugin: plugin.configDirs;
+          dirList = plugin: plugin.completionDirs;
           multiple = false;
           functor = dir: ''
             if test -d $plugin/${dir}
